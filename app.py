@@ -11,12 +11,9 @@ import re
 
 
 def main():
-    #load_dotenv()
+    load_dotenv()
     st.set_page_config(page_title="Ask your PDF")
     st.header("Ask Goals Database 💬")
-    
-    # Set OPEN AI KEY with streamlit
-    OPENAI_API_KEY = st.text_input("Open Api Key:")
     
     #load user_goals
     user_goals = pd.read_csv('user_goals.csv')
