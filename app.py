@@ -8,19 +8,26 @@ def main():
     load_dotenv()
 
     st.header("Ask Goals Database 💬")
+    
+    # Enter openai API Key on streamlite
+    st.subheader("OpenAI API Key")
+    
+    # Get api key
+    api_key = st.text_input('Enter API Key here:')
+    
+    # Add quotations to api_key
+    api_key = f"{api_key}"
+    
 
     # Load user_goals
     df = pd.read_csv('user_goals.csv')
-    
-    # Save top 100 values
-    df = df.iloc[:50]
 
     st.sidebar.header("Filter")
 
     # Set Streamlit elements (sidebar sliders)
     threshold = st.sidebar.slider("Select Minimum Match Rating", 50, 100, 50)
-    number_matches = st.sidebar.slider("Select Number of Matches", 1, 10, 3)
-    temperature = st.sidebar.slider("Select Temperature", 0.0, 1.0, 0.1)
+    number_matches = st.sidebar.slider("Select Number of Matches", 1, 10, 10)
+    temperature = st.sidebar.slider("Select Temperature", 0.0, 1.0, 0.0)
     token_output = st.sidebar.slider("Select Token Output Number", 1, 100, 20)
     
     # Show database
@@ -33,8 +40,8 @@ def main():
     
     # Create elements variable
     element7 = st.text_input('Enter input 1 here:', value= "Return a number out of 100 that reflects how well the two goals relate.")
-    element8 = st.text_input('Enter input 2 here:', value =  "Do not return words")
-    element9 = st.text_input('Enter input 3 here:', value = 'Only return a number')
+    element8 = st.text_input('Enter input 2 here:', value =  "Do not return words.")
+    element9 = st.text_input('Enter input 3 here:', value = 'Only return a number.')
     element10 = st.text_input('Enter input 4 here:', value = '')
 
 
@@ -60,9 +67,6 @@ def main():
                 )
     if goal != "":
         
-        # Get api key
-        api_key = os.getenv('openai_api_key')
-        
         # Instantiate the OpenAI client
         client = OpenAI(api_key=api_key)
         
@@ -74,7 +78,7 @@ def main():
                 messages=[{"role": "system", "content": "You are a helpful assistant."},
                             {"role": "user", "content": prompt_text}],
                 temperature= temperature,
-                max_tokens= 20  # Adjust the number of tokens for the desired length of response
+                max_tokens= token_output  # Adjust the number of tokens for the desired length of response
             )   
             return response.choices[0].message.content
 
@@ -130,10 +134,6 @@ def main():
             st.write(f"Match Name: {str(matches.iloc[i, 1])}")
             st.write(f"Match Strength Rating: {str(matches.iloc[i, 3])}")
             st.write(f"Match Goal: {str(matches.iloc[i, 2])}")
-            
-        # Display tokens and cost
-        #st.header("Tokens and Cost")
-        #st.text(cb)
 
 if __name__ == '__main__':
     main()
