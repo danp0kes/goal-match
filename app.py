@@ -98,8 +98,6 @@ def main():
         # Execute the process_dataframe function
         process_dataframe(df)
         
-        st.write(df)
-
         # Grab just numeric values from similarity_score
         df['similarity_score'] = df['similarity_score'].str.extract('(\d+)')
         
@@ -115,8 +113,6 @@ def main():
         # Convert threshold to int
         threshold = int(threshold)
         
-        st.write(df)
-        
         # Drop na values in similiarity_score column
         df = df.dropna(subset=['similarity_score'])
         
@@ -128,8 +124,6 @@ def main():
         
         # Order matches by similarity score and limit to number_matches
         matches = df.sort_values(by=['similarity_score'], ascending=False).head(number_matches)
-        
-        st.write(matches)
         
         for i in range(len(matches)):
             st.header(f"Match {i + 1}")
