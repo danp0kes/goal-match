@@ -2,13 +2,18 @@ from dotenv import load_dotenv
 import streamlit as st
 import pandas as pd
 from openai import OpenAI
+import os
 
 def main():
-    # Create header
+    load_dotenv()
+
     st.header("Ask Goals Database 💬")
 
     # Load user_goals
     df = pd.read_csv('user_goals.csv')
+    
+    # Save top 100 values
+    df = df.iloc[:50]
 
     st.sidebar.header("Filter")
 
@@ -54,6 +59,10 @@ def main():
             height= 200)
                 )
     if goal != "":
+        
+        # Get api key
+        api_key = os.getenv('openai_api_key')
+        
         # Instantiate the OpenAI client
         client = OpenAI(api_key=api_key)
         
@@ -121,6 +130,10 @@ def main():
             st.write(f"Match Name: {str(matches.iloc[i, 1])}")
             st.write(f"Match Strength Rating: {str(matches.iloc[i, 3])}")
             st.write(f"Match Goal: {str(matches.iloc[i, 2])}")
+            
+        # Display tokens and cost
+        #st.header("Tokens and Cost")
+        #st.text(cb)
 
 if __name__ == '__main__':
     main()
