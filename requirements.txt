@@ -1,7 +1,5 @@
-langchain
 python-dotenv
 streamlit
 openai
-qdrant-client
 tiktoken
-faiss-cpu
+openai
