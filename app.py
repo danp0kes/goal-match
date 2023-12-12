@@ -55,19 +55,20 @@ def main():
             #seperate by line
             elements += element + "\n"
     
+    # Create subheader that displays question
+    st.subheader("All Parameters")
+
+    # Text input question
+    question = (st.text_area('All Inputs:',value= elements,
+            height= 200)
+                )
+
     # Create subheader that displays goal
     st.subheader("Goal")
     
     # Goal input
     goal = st.text_input('Enter goal here:',value="")  # Replace with actual user input
     
-    # Create subheader that displays question
-    st.subheader("All Parameters")
-    
-    # Text input question
-    question = (st.text_area('All Inputs:',value= elements,
-            height= 200)
-                )
     if goal != "":
         
         # Instantiate the OpenAI client
