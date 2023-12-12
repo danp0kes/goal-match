@@ -54,9 +54,8 @@ def main():
             height= 200)
                 )
     if goal != "":
-        
         # Instantiate the OpenAI client
-        client = OpenAI(api_key="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")
+        client = OpenAI(api_key=api_key)
         
         # Function to compare similarity synchronously between the target sentence and each row in the DataFrame
         def calculate_similarity(row):
