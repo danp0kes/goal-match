@@ -17,11 +17,14 @@ def main():
     
     # Add quotations to api_key
     api_key = f"{api_key}"
-    
 
     # Load user_goals
     df = pd.read_csv('user_goals.csv')
 
+    # Only save first 100 values
+    df = df.iloc[:100]
+    
+    # Create Filter Header
     st.sidebar.header("Filter")
 
     # Set Streamlit elements (sidebar sliders)
